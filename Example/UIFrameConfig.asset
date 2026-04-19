@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed9afeaf3a2d7142ae6b4789ae72fed, type: 3}
+  m_Name: UIFrameConfig
+  m_EditorClassIdentifier: 
+  windowConfigs: []
+  panelConfigs:
+  - panelId: HUD
+    prefab: {fileID: 893744951962555595, guid: 147215f0c9ed31e45bcddc2dbf9b6272, type: 3}
+    showOnStart: 1
+    priority: 1
+  - panelId: ScorePopupPanel
+    prefab: {fileID: 5907954280032000887, guid: 9a008d92ccdf1804cb2292a778cd4bd0,
+      type: 3}
+    showOnStart: 0
+    priority: 2
+  defaultWindowId: 
+  defaultPanelIds:
+  - HUD
+  deactivateOnRegister: 1

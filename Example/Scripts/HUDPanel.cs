@@ -32,7 +32,7 @@ public class HUDPanel : BasePanelController<ScoreArgs>
     }    
 }
 [Serializable]
-    public class ScoreArgs : PanelArgs
-    {
-        public int InitialScore;
-    }
+public class ScoreArgs : PanelArgs
+{
+    public int InitialScore;
+}

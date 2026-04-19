@@ -31,10 +31,6 @@ namespace SimpleUI
         /// </summary>
         public PanelPriority Priority => priority;
 
-        protected sealed override void SetArgs(T args)
-        {
-            base.SetArgs(args);
-        }
     }
     public abstract class BasePanelController : BasePanelController<PanelArgs>
     {

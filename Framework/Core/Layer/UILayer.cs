@@ -13,7 +13,7 @@ namespace SimpleUI
         internal abstract void ShowScreen(TScreen screen);
         internal abstract void ShowScreen<TArgs>(TScreen screen, TArgs args) where TArgs : IScreenArgs;
         internal abstract void HideScreen(TScreen screen);
-        protected abstract void ReparentScreen(IUIScreen controller);
+        protected abstract void ReparentScreen(TScreen screen);
         
         internal void RegisterScreen(string screenId, TScreen screen)
         {

@@ -33,14 +33,14 @@ namespace SimpleUI
         /// 面板放到到对应的 Layer下
         /// </summary>
         /// <param name="screen"></param>
-        protected sealed override void ReparentScreen(IUIScreen controller)
+        protected sealed override void ReparentScreen(IPanel screen)
         {
-            if (controller is IPanel panel)
+            if (screen is IPanel panel)
             {
                 ReparentPanel(panel);
             }else
             {
-                Debug.LogError($"Attempted to reparent a non-panel screen: {controller.ScreenId}");
+                Debug.LogError($"Attempted to reparent a non-panel screen: {screen.ScreenId}");
             }
         }
         internal override void ShowScreen(IPanel screen)

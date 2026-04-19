@@ -26,9 +26,9 @@ namespace SimpleUI
         {
             screen.Hide();
         }
-        protected sealed override void ReparentScreen(IUIScreen controller)
+        protected sealed override void ReparentScreen(IWindow screen)
         {
-            if (controller is IWindow window)
+            if (screen is IWindow window)
             {
                 ReparentWindow(window);
             }

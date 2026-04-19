@@ -24,9 +24,9 @@ namespace SimpleUI
         public virtual void Show(IScreenArgs args)
         {
             // 检查参数类型是否匹配
-            if(args is TArgs)
+            if(args is TArgs typeArgs)
             {
-                SetArgs((TArgs)args);
+                CurrentArgs = typeArgs;
             }
             else
             {
@@ -54,9 +54,5 @@ namespace SimpleUI
             OnDestroyed?.Invoke(this);
         }
 
-        protected virtual void SetArgs(TArgs args)
-        {
-            CurrentArgs = args;
-        }
     }
 }

@@ -18,11 +18,6 @@ public class GameStarter : MonoBehaviour
     
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Escape))
-        // {
-        //     uiManager.OpenWindow(ScreenIds.SETTINGS, PlayerPrefs.GetFloat("Volume", 0.5f));
-        // }
-
         // 按空格增加分数（演示 HUD 和提示面板）
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -40,15 +35,5 @@ public class GameStarter : MonoBehaviour
             Debug.Log($"[GameStarter] Adding {value} score to HUD");
             hud.AddScore(value);
         }
-        // var hudGO = GameObject.Find(ScreenIds.HUD);
-        // if (hudGO != null)
-        // {
-        //     Debug.Log($"[GameStarter] Adding {value} score to HUD");
-        //     var hud = hudGO.GetComponent<HUDPanel>();
-        //     if (hud != null)
-        //     {
-        //         hud.AddScore(value);
-        //     }
-        // }
     }
 }

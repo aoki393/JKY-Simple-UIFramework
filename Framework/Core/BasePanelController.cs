@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace SimpleUI
 {
-    /// <summary>
-    /// 面板优先级：数值越大，渲染层级越靠前（视觉上越靠上）
-    /// </summary>
     public enum PanelPriority
     {
         Background = 0,   // 背景层（如地图、特效）
@@ -17,18 +14,18 @@ namespace SimpleUI
     [System.Serializable] 
     public class PanelArgs : IPanelArgs
     {
-        // 可以根据需要添加通用的面板参数字段
+        protected PanelPriority panelPriority;
+
+        public PanelPriority PanelPriority
+        {
+            get => panelPriority;
+            set => panelPriority = value;
+        }
     }
-    /// <summary>
-    /// 面板基类（HUD、血条、小地图等）
-    /// </summary>
+
     public abstract class BasePanelController<T> : BaseScreen<T>, IPanel where T : IPanelArgs
     {
         [SerializeField] protected PanelPriority priority = PanelPriority.Normal;
-        
-        /// <summary>
-        /// 面板优先级（可在 Inspector 配置）
-        /// </summary>
         public PanelPriority Priority => priority;
 
     }

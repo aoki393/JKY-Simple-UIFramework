@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed9afeaf3a2d7142ae6b4789ae72fed, type: 3}
   m_Name: UIFrameConfig
   m_EditorClassIdentifier: 
-  windowConfigs: []
+  windowConfigs:
+  - windowId: ShopWindow
+    prefab: {fileID: 8494783201524269807, guid: a132863a90551e849beeeb2cb52caf32,
+      type: 3}
+  - windowId: FriendRequestWindow
+    prefab: {fileID: 5105436664481818487, guid: 87a963256327eb847a6ab6621f17217f,
+      type: 3}
+  - windowId: LetterNotifyWindow
+    prefab: {fileID: 5030292886700005445, guid: ce22e3786847ff947a97380deabe83af,
+      type: 3}
   panelConfigs:
   - panelId: HUD
     prefab: {fileID: 893744951962555595, guid: 147215f0c9ed31e45bcddc2dbf9b6272, type: 3}
-    showOnStart: 1
     priority: 1
   - panelId: ScorePopupPanel
     prefab: {fileID: 5907954280032000887, guid: 9a008d92ccdf1804cb2292a778cd4bd0,
       type: 3}
-    showOnStart: 0
     priority: 2
-  defaultWindowId: 
-  defaultPanelIds:
-  - HUD
   deactivateOnRegister: 1

@@ -10,9 +10,9 @@ public class HUDPanel : BasePanelController<ScoreArgs>
     
     protected override void OnScreenArgsSet()
     {
-        if(CurrentArgs != null)
+        if(ScreenArgs != null)
         {
-            currentScore = CurrentArgs.InitialScore;            
+            currentScore = ScreenArgs.InitialScore;            
         }
         UpdateScoreUI();
     }

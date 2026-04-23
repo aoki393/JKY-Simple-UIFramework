@@ -223,7 +223,7 @@ namespace SimpleUI
 
         public bool IsScreenRegistered(string screenId, out Type type) {
             if (windowLayer.IsScreenRegistered(screenId)) {
-                type = typeof(BaseWindowController);
+                type = typeof(BaseWindowController<WindowArgs>);
                 return true;
             }
 

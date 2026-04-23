@@ -4,27 +4,65 @@ using UnityEngine;
 namespace SimpleUI
 {
     /// <summary>
-    /// 窗口层：一次只显示一个，支持关闭当前窗口
+    /// 只能有一个窗口处于焦点
+    /// 支持窗口抢占显示（需要立即处理的通知等）
+    /// 支持排队显示（不干扰当前窗口的显示，等当前窗口关闭后再显示）
     /// </summary>
     public class WindowLayer : UILayer<IWindow>
     {
         public IWindow CurrentWindow { get; private set; }
-        // private Stack<WindowHistoryEntry> history = new Stack<WindowHistoryEntry>();
+        private Stack<WindowHistoryEntry> windowHistory = new();
+        private Queue<WindowHistoryEntry> windowQueue = new();
+        [SerializeField] private PopupWindowLayer popLayer; // 用于处理模态弹窗
 
 #region Override        
         internal override void ShowScreen(IWindow screen)
         {
-            screen.Show();
+            ShowScreen<IWindowArgs>(screen, null);
         }
 
         internal override void ShowScreen<TArgs>(IWindow screen, TArgs args)
         {
-            screen.Show(args);
+            IWindowArgs windowArgs = args as IWindowArgs;
+
+            // 先检查是入队等待显示还是直接显示
+            if(ShouldEnqueue(screen,windowArgs))
+            {
+                EnqueueWindow(screen, windowArgs);
+            }
+            else
+            {
+                DoShow(screen, windowArgs);
+            }
         }
 
         internal override void HideScreen(IWindow screen)
         {
-            screen.Hide();
+            if(CurrentWindow == screen)
+            {
+                windowHistory.Pop();
+                screen.Hide();
+
+                if(screen.IsPopup) // 原版是在关闭Transition结束里执行，暂时没实现
+                {
+                    popLayer.RefreshDarken(); // 刷新popLayer背景显示状态
+                }
+
+                CurrentWindow = null;
+
+                // 队列（等待显示）、历史栈（之前关闭的）
+                if (windowQueue.Count > 0)
+                {
+                    ShowNextInQueue();
+                }else if (windowHistory.Count > 0)
+                {
+                    ShowPreviousInHistory();
+                }
+            }
+            else
+            {
+                Debug.LogError($"只能关闭最上层窗口，当前尝试关闭窗口 [{screen.ScreenId}]");
+            }
         }
         protected sealed override void ReparentScreen(IWindow screen)
         {
@@ -35,111 +73,81 @@ namespace SimpleUI
         }
 #endregion
 
+#region 内部方法
+
+        private bool ShouldEnqueue(IWindow screen, IWindowArgs windowArgs)
+        {
+            if (CurrentWindow == null && windowQueue.Count == 0) // 当前没有在显示的窗口，队列中也没有等待显示的窗口
+                return false; 
+            
+            if (windowArgs!=null && windowArgs.WindowPriority == WindowPriority.Enqueue) 
+                return true;
+                
+            if(screen.WindowPriority == WindowPriority.Enqueue)
+                return true;
+
+            return false;
+        }
+
+        private void EnqueueWindow(IWindow screen, IWindowArgs args)
+        {
+            windowQueue.Enqueue(new WindowHistoryEntry(screen, args));
+            Debug.Log($"Enqueued window [{screen.ScreenId}]");
+        }
+
+        /// <summary>
+        /// 显示执行的逻辑：
+        /// 根据当前窗口的HideOnForeground属性决定是否隐藏，
+        /// 要显示的窗口是Popup类型开启popLayer背景
+        /// </summary>
+        /// <param name="screen"></param>
+        /// <param name="args"></param>
+        private void DoShow(IWindow screen, IWindowArgs args)
+        {
+            // 重复打开检查
+            if(CurrentWindow==screen)
+            {
+                Debug.LogWarning($"Window {screen.ScreenId} is already open! Ignoring duplicate request.");
+                return;
+            }
+            if(CurrentWindow != null && CurrentWindow.HideOnForegroundLost)
+            {
+                CurrentWindow.Hide();
+            }
+            
+            if(screen.IsPopup)
+            {
+                popLayer.ShowDarkBG(); // popLayer的背景激活显示
+            }
+
+            windowHistory.Push(new WindowHistoryEntry(CurrentWindow, args));
+            screen.Show(args);
+
+            CurrentWindow = screen;
+        }
+        private void ShowNextInQueue()
+        {
+            var next = windowQueue.Dequeue();
+            DoShow(next.Window, next.WindowArgs);
+        }
+        private void ShowPreviousInHistory()
+        {
+            var previous = windowHistory.Pop();
+            DoShow(previous.Window, previous.WindowArgs);
+        }
+
         private void ReparentWindow(IWindow window)
         {
-            if (window == null) return;
-            
-            var windowBehaviour = window as MonoBehaviour;
-            if (windowBehaviour == null) return;
+            if(window.IsPopup) // 模态弹窗防置到PopLayer
+            {
+                popLayer.AddScreen(window);
+                return;
+            }
 
-            windowBehaviour.transform.SetParent(transform, false);
+            (window as MonoBehaviour).transform.SetParent(transform, false);
         }
-        
-        // internal void OpenWindow(string screenId)
-        // {
-        //     // 注册检查
-        //     // if (!TryGetScreen(screenId, out var screen))
-        //     // {
-        //     //     Debug.LogError($"Window {screenId} not registered!");
-        //     //     return;
-        //     // }            
-            
-        //     // var window = screen as IWindow;
 
-        //     // // 类型检查
-        //     // if (window == null)
-        //     // {
-        //     //     Debug.LogError($"Screen {screenId} is not a Window!");
-        //     //     return;
-        //     // }
-
-        //     // // 防止重复打开
-        //     // if (IsWindowOpen(screenId))
-        //     // {
-        //     //     Debug.LogWarning($"Window {screenId} is already open! Ignoring duplicate request.");
-        //     //     return;
-        //     // }
-            
-        //     // // 核心逻辑：打开新窗口前，把当前窗口压入历史栈
-        //     // if (CurrentWindow != null && CurrentWindow.IsVisible)
-        //     // {
-        //     //     Debug.Log($"Pushing current window {CurrentWindow.ScreenId} to history");
-        //     //     // 保存当前窗口的信息到历史栈
-        //     //     history.Push(new WindowHistoryEntry(CurrentWindow, CurrentWindow.LastShowData));
-        //     //     // 隐藏当前窗口
-        //     //     CurrentWindow.Hide();
-        //     // }
-            
-        //     // // 显示新窗口
-        //     // CurrentWindow = window;
-        //     // window.Show();
-        // }
-        
-        // internal void CloseCurrentWindow()
-        // {
-        //     // if (CurrentWindow == null)
-        //     // {
-        //     //     Debug.LogWarning("No window is currently open!");
-        //     //     return;
-        //     // }
-            
-        //     // // 隐藏当前窗口
-        //     // CurrentWindow.Hide();
-            
-        //     // // 从历史栈中取出上一个窗口
-        //     // if (history.Count > 0)
-        //     // {
-        //     //     var previous = history.Pop();
-        //     //     CurrentWindow = previous.Window;
-        //     //     // 恢复显示，使用之前保存的数据
-        //     //     CurrentWindow.Show(previous.Data);
-        //     // }
-        //     // else
-        //     // {
-        //     //     CurrentWindow = null;
-        //     // }
-        // }
-        
-        // internal void CloseWindow(string screenId)
-        // {
-        //     if (CurrentWindow != null && CurrentWindow.ScreenId == screenId)
-        //     {
-        //         CloseCurrentWindow();
-        //     }else
-        //     {
-        //         Debug.LogWarning($"Can only close the topmost window. Current: {CurrentWindow?.ScreenId}, Requested: {screenId}");
-        //     }
-        // }
-
-        // /// <summary>
-        // /// 清空历史栈（用于切换场景或重置）
-        // /// </summary>
-        // internal void ClearHistory()
-        // {
-        //     history.Clear();
-        // }
-
-        // internal bool IsWindowOpen(string screenId)
-        // {
-        //     return CurrentWindow != null && CurrentWindow.ScreenId == screenId && CurrentWindow.IsVisible;
-        //     // return CurrentWindow != null && CurrentWindow.ScreenId == screenId;
-        // }
-
-        // /// <summary>
-        // /// 获取历史栈深度（用于调试）
-        // /// </summary>
-        // public int HistoryDepth => history.Count;
-
+#endregion
 
     }
 }

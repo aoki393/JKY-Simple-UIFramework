@@ -8,10 +8,19 @@ namespace SimpleUI
     /// <summary>
     /// 窗口参数的基接口
     /// </summary>
-    public interface IWindowArgs : IScreenArgs { }
+    public interface IWindowArgs : IScreenArgs
+    {
+        WindowPriority WindowPriority { get; set; }
+        bool HideOnForegroundLost { get; set; }
+        bool IsPopup { get; set; }
+        // bool SuppressPrefabProperties { get; set; } // 是否跳过UIPrefab属性设置
+    }
     
     /// <summary>
     /// 面板参数的基接口
     /// </summary>
-    public interface IPanelArgs : IScreenArgs { }
+    public interface IPanelArgs : IScreenArgs
+    {
+        PanelPriority PanelPriority { get; set; }
+    }
 }

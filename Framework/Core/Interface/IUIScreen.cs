@@ -23,7 +23,9 @@ namespace SimpleUI
     /// </summary>
     public interface IWindow : IUIScreen
     {
-
+        WindowPriority WindowPriority { get; }
+        bool HideOnForegroundLost { get; }
+        bool IsPopup { get; }
     }
     
     /// <summary>

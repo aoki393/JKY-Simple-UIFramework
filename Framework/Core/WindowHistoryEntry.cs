@@ -6,12 +6,12 @@ namespace SimpleUI
     public struct WindowHistoryEntry
     {
         public IWindow Window { get; }
-        public object Data { get; }
+        public IWindowArgs WindowArgs { get; }
         
-        public WindowHistoryEntry(IWindow window, object data)
+        public WindowHistoryEntry(IWindow window, IWindowArgs windowArgs)
         {
             Window = window;
-            Data = data;
+            WindowArgs = windowArgs;
         }
     }
 }

@@ -9,4 +9,6 @@ public class ScreenIds
     public const string FriendRequest = "FriendRequestWindow";
     public const string LetterNotify = "LetterNotifyWindow";
     public const string PopupConfirm = "PopupConfirmWindow";
+    public const string FriendGetNotify= "FriendGetNotifyPanel";
+    public const string TestButtonPanel= "TestButtonPanel";
 }

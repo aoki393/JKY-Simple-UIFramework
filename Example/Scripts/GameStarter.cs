@@ -13,27 +13,8 @@ public class GameStarter : MonoBehaviour
         {
             uiManager.IniteUIFrameConfig(uiConfig);
         }        
-        // uiManager.ShowPanel(ScreenIds.HUD, new ScoreArgs { InitialScore = 5 });  // 初始分数为 0
+        
+        uiManager.ShowPanel(ScreenIds.TestButtonPanel);
     }
     
-    // void Update()
-    // {
-    //     // 按空格增加分数（演示 HUD 和提示面板）
-    //     if (Input.GetKeyDown(KeyCode.Space))
-    //     {
-    //         // 实际项目中应该通过事件系统，这里简单演示
-    //         AddScoreToHUD(10);
-    //     }
-    // }
-    // private void AddScoreToHUD(int value)
-    // {
-    //     Debug.Log($"[GameStarter] AddScoreToHUD");
-    //     // 通过 UI 事件系统会更合适，这里简化处理
-    //     var hud = FindFirstObjectByType <HUDPanel>();
-    //     if (hud != null)
-    //     {
-    //         Debug.Log($"[GameStarter] Adding {value} score to HUD");
-    //         hud.AddScore(value);
-    //     }
-    // }
 }

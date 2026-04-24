@@ -17,7 +17,7 @@ MonoBehaviour:
     prefab: {fileID: 8494783201524269807, guid: a132863a90551e849beeeb2cb52caf32,
       type: 3}
   - windowId: FriendRequestWindow
-    prefab: {fileID: 5105436664481818487, guid: 87a963256327eb847a6ab6621f17217f,
+    prefab: {fileID: 2552022505310505963, guid: b187c2c76dc3ac44986a22b6cd9cdf7c,
       type: 3}
   - windowId: LetterNotifyWindow
     prefab: {fileID: 5030292886700005445, guid: ce22e3786847ff947a97380deabe83af,
@@ -26,11 +26,12 @@ MonoBehaviour:
     prefab: {fileID: 5439637838392284082, guid: 867a701c9ccb5f042bee85190a3aed52,
       type: 3}
   panelConfigs:
-  - panelId: HUD
-    prefab: {fileID: 893744951962555595, guid: 147215f0c9ed31e45bcddc2dbf9b6272, type: 3}
+  - panelId: TestButtonPanel
+    prefab: {fileID: 3056368816880247399, guid: 489917e5139e31d458890b7381d7c6e0,
+      type: 3}
     priority: 1
-  - panelId: ScorePopupPanel
-    prefab: {fileID: 5907954280032000887, guid: 9a008d92ccdf1804cb2292a778cd4bd0,
+  - panelId: FriendGetNotifyPanel
+    prefab: {fileID: 7231305945501358578, guid: b45f346165adeb94fb5b1c11f7aea8fb,
       type: 3}
     priority: 2
   deactivateOnRegister: 1

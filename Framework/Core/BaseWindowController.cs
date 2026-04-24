@@ -38,8 +38,8 @@ namespace SimpleUI
         public bool HideOnForegroundLost => ScreenArgs.HideOnForegroundLost;
         public bool IsPopup => ScreenArgs.IsPopup;
     }
-    // public abstract class BaseWindowController : BaseWindowController<IWindowArgs>
-    // {
+    public abstract class BaseWindowController : BaseWindowController<WindowArgs>
+    {
         
-    // }
+    }
 }

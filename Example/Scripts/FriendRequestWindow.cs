@@ -1,7 +1,7 @@
 using UnityEngine;
 using SimpleUI;
 using UnityEngine.UI;
-public class FriendRequestWindow : BaseWindowController<WindowArgs>
+public class FriendRequestWindow : BaseWindowController
 {
     [SerializeField] private Button acceptButton;
     [SerializeField] private Button rejectButton;

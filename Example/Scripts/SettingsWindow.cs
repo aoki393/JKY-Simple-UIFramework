@@ -2,7 +2,7 @@ using UnityEngine.UI;
 using SimpleUI;
 using UnityEngine;
 
-public class SettingsWindow : BaseWindowController<WindowArgs>
+public class SettingsWindow : BaseWindowController
 {
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Button closeButton;

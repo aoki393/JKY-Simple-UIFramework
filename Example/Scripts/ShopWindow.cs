@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SimpleUI;
 
-public class ShopWindow : BaseWindowController<WindowArgs>
+public class ShopWindow : BaseWindowController
 {
     [SerializeField] private Button btnClose;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using SimpleUI;
 using UnityEngine.UI;
-public class LetterNotifyWindow : BaseWindowController<WindowArgs>
+public class LetterNotifyWindow : BaseWindowController
 {
     [SerializeField] private Button closeButton;
     void Start()

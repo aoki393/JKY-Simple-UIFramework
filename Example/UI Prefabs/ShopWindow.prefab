@@ -621,8 +621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenId: ShopWindow
-  screenArgs:
-    windowQueuePriority: 1
-    hideOnForegroundLost: 0
+  config:
+    priority: 1
+    hideOnForegroundLost: 1
     isPopup: 0
   btnClose: {fileID: 8600307605117611471}

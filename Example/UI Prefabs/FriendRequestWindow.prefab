@@ -401,9 +401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenId: 
-  screenArgs:
-    windowQueuePriority: 1
-    hideOnForegroundLost: 0
+  config:
+    priority: 1
+    hideOnForegroundLost: 1
     isPopup: 0
   acceptButton: {fileID: 443573194602553883}
   rejectButton: {fileID: 9095323782007272512}

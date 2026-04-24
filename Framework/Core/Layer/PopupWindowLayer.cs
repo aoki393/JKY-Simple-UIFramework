@@ -11,12 +11,10 @@ namespace SimpleUI
         public GameObject darkBackground; // 用于模态效果的半透明背景
         private List<GameObject> containedScreens = new List<GameObject>();
 
-        public void AddScreen(IWindow window)
+        public void AddScreen(Transform screenRectTransform)
         {
-            if (window is MonoBehaviour mb)
-            {
-                mb.transform.SetParent(transform, false);
-            }
+            screenRectTransform.SetParent(transform, false);
+            containedScreens.Add(screenRectTransform.gameObject);
         }
         public void RefreshDarken() {
             for (int i = 0; i < containedScreens.Count; i++) {

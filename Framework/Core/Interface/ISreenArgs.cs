@@ -10,9 +10,9 @@ namespace SimpleUI
     /// </summary>
     public interface IWindowArgs : IScreenArgs
     {
-        WindowPriority WindowPriority { get; set; }
-        bool HideOnForegroundLost { get; set; }
-        bool IsPopup { get; set; }
+        // WindowPriority WindowPriority { get; set; }
+        // bool HideOnForegroundLost { get; set; }
+        // bool IsPopup { get; set; }
         // bool SuppressPrefabProperties { get; set; } // 是否跳过UIPrefab属性设置
     }
     

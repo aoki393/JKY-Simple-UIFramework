@@ -43,9 +43,9 @@ namespace SimpleUI
                 windowHistory.Pop();
                 screen.Hide();
 
-                if(screen.IsPopup) // 原版是在关闭Transition结束里执行，暂时没实现
+                if(screen.Config.IsPopup) // 原版是在关闭Transition结束里执行，暂时没实现
                 {
-                    popLayer.RefreshDarken(); // 刷新popLayer背景显示状态
+                    popLayer.RefreshDarken(); // 刷新popLayer背景遮罩的显示
                 }
 
                 CurrentWindow = null;
@@ -79,11 +79,8 @@ namespace SimpleUI
         {
             if (CurrentWindow == null && windowQueue.Count == 0) // 当前没有在显示的窗口，队列中也没有等待显示的窗口
                 return false; 
-            
-            if (windowArgs!=null && windowArgs.WindowPriority == WindowPriority.Enqueue) 
-                return true;
                 
-            if(screen.WindowPriority == WindowPriority.Enqueue)
+            if(screen.Config.Priority == WindowPriority.Enqueue)
                 return true;
 
             return false;
@@ -110,17 +107,17 @@ namespace SimpleUI
                 Debug.LogWarning($"Window {screen.ScreenId} is already open! Ignoring duplicate request.");
                 return;
             }
-            if(CurrentWindow != null && CurrentWindow.HideOnForegroundLost)
+            if(CurrentWindow != null && CurrentWindow.Config.HideOnForegroundLost)
             {
                 CurrentWindow.Hide();
             }
             
-            if(screen.IsPopup)
+            if(screen.Config.IsPopup)
             {
-                popLayer.ShowDarkBG(); // popLayer的背景激活显示
+                popLayer.ShowDarkBG(); // popLayer的遮罩背景激活显示
             }
 
-            windowHistory.Push(new WindowHistoryEntry(CurrentWindow, args));
+            windowHistory.Push(new WindowHistoryEntry(screen, args));
             screen.Show(args);
 
             CurrentWindow = screen;
@@ -138,9 +135,9 @@ namespace SimpleUI
 
         private void ReparentWindow(IWindow window)
         {
-            if(window.IsPopup) // 模态弹窗防置到PopLayer
+            if(window.Config.IsPopup) // 模态弹窗防置到PopLayer
             {
-                popLayer.AddScreen(window);
+                popLayer.AddScreen((window as MonoBehaviour).transform);
                 return;
             }
 

@@ -52,7 +52,8 @@ namespace SimpleUI
             }
             else
             {
-                Debug.LogWarning($"Screen {screenId} is already active. Updating args without transition!");
+                // 窗口恢复但HideOnForeground配置不勾选时会这样
+                // Debug.LogWarning($"Screen {screenId} is already active. Updating args without transition!");
                 InTransitionFinished?.Invoke(this); // 直接调用完成回调
             }     
         }

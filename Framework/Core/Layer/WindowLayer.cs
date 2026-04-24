@@ -94,7 +94,7 @@ namespace SimpleUI
 
         /// <summary>
         /// 显示执行的逻辑：
-        /// 根据当前窗口的HideOnForeground属性决定是否隐藏，
+        /// 根据当前窗口的HideOnForeground属性、要打开的是不是Popup窗口决定是否隐藏，
         /// 要显示的窗口是Popup类型开启popLayer背景
         /// </summary>
         /// <param name="screen"></param>
@@ -107,7 +107,9 @@ namespace SimpleUI
                 Debug.LogWarning($"Window {screen.ScreenId} is already open! Ignoring duplicate request.");
                 return;
             }
-            if(CurrentWindow != null && CurrentWindow.Config.HideOnForegroundLost)
+
+            // 隐藏逻辑
+            if(CurrentWindow != null && CurrentWindow.Config.HideOnForegroundLost && !screen.Config.IsPopup)
             {
                 CurrentWindow.Hide();
             }

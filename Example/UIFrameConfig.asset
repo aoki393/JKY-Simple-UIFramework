@@ -22,6 +22,9 @@ MonoBehaviour:
   - windowId: LetterNotifyWindow
     prefab: {fileID: 5030292886700005445, guid: ce22e3786847ff947a97380deabe83af,
       type: 3}
+  - windowId: PopupConfirmWindow
+    prefab: {fileID: 5439637838392284082, guid: 867a701c9ccb5f042bee85190a3aed52,
+      type: 3}
   panelConfigs:
   - panelId: HUD
     prefab: {fileID: 893744951962555595, guid: 147215f0c9ed31e45bcddc2dbf9b6272, type: 3}

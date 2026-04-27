@@ -41,6 +41,9 @@ namespace SimpleUI
         [Header("Window Configuration")]
         [SerializeField] private WindowConfig config;
         public WindowConfig Config => config;
+        protected override void HierarchyFixOnShow() {
+            transform.SetAsLastSibling();
+        }
 
     }
     public abstract class BaseWindowController : BaseWindowController<WindowArgs>

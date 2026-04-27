@@ -44,6 +44,7 @@ namespace SimpleUI
                 }
             }
 
+            HierarchyFixOnShow();
             OnScreenArgsSet(); // 具体子类在这里使用参数进行界面更新等操作
 
             if (!gameObject.activeSelf)
@@ -70,6 +71,14 @@ namespace SimpleUI
         /// 子类重写该方法使用传入的参数进行界面更新操作
         /// </summary>
         protected virtual void OnScreenArgsSet() { }
+        
+        /// <summary>
+        /// 显示时调整层级
+        /// HideOnForeground属性为false的窗口不会自己隐藏，这时打开新窗口就需要调整层级
+        /// </summary>
+        protected virtual void HierarchyFixOnShow()
+        {
+        }
         
         protected virtual void OnDestroy()
         {

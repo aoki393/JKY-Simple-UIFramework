@@ -1,0 +1,13 @@
+# Unity 自动生成/无关文件
+Library/
+Temp/
+obj/
+Logs/
+UserSettings/
+*.meta
+*.pidb
+*.suo
+*.sln
+*.csproj
+Packages/com.*
+*.unitypackage
